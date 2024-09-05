@@ -27,7 +27,6 @@ public class CustomerRegistrationForm extends javax.swing.JFrame {
     public CustomerRegistrationForm() {
         initComponents();
         loadCustomers("first_name", "ASC", jTextField1.getText());
-
     }
 
     /**

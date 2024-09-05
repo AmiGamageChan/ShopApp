@@ -18,6 +18,16 @@ import model.MySQL2;
  */
 public class SignIn extends javax.swing.JFrame {
 
+    private static String employeeEmail;
+
+    public static String getEmployeeEmail() {
+        return employeeEmail;
+    }
+
+    public static void setEmployeeEmail(String aEmployeeEmail) {
+        employeeEmail = aEmployeeEmail;
+    }
+
     /**
      * Creates new form signIn
      */
@@ -156,6 +166,8 @@ public class SignIn extends javax.swing.JFrame {
                     Home home = new Home(email, fName, lName);
                     home.setVisible(true);
                     this.dispose();
+
+                    setEmployeeEmail(email);
                 } else {
                     JOptionPane.showMessageDialog(this, "Invalid email or password", "Warning", JOptionPane.WARNING_MESSAGE);
 

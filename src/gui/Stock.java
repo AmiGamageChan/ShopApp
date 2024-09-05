@@ -9,6 +9,8 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import java.awt.HeadlessException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
@@ -21,6 +23,12 @@ import model.MySQL2;
  * @author AmiChan
  */
 public class Stock extends javax.swing.JFrame {
+
+    private GRN grn;
+
+    public void setGRN(GRN grn) {
+        this.grn = grn;
+    }
 
     HashMap<String, String> brandMap = new HashMap<>();
 
@@ -173,11 +181,12 @@ public class Stock extends javax.swing.JFrame {
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(9, 9, 9)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,6 +239,11 @@ public class Stock extends javax.swing.JFrame {
 
         jButton5.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         jButton5.setText("Find");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Stock ID ASC", "Stock ID DESC", "Product ID ASC", "Product ID DESC", "Brand ASC", "Brand DESC", "Name ASC", "Name DESC", "Selling Price ASC", "Selling Price DESC", "Quantity ASC", "Quantity DESC" }));
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
@@ -238,8 +252,21 @@ public class Stock extends javax.swing.JFrame {
             }
         });
 
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        jFormattedTextField1.setText("0");
+        jFormattedTextField1.setSelectedTextColor(new java.awt.Color(204, 255, 255));
+
+        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        jFormattedTextField2.setText("0");
+        jFormattedTextField2.setSelectedTextColor(new java.awt.Color(204, 255, 255));
+
         jButton6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton6.setText("Find");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         jLabel8.setText("Exp");
@@ -249,6 +276,11 @@ public class Stock extends javax.swing.JFrame {
 
         jButton7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jButton7.setText("Clear All");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -421,7 +453,7 @@ public class Stock extends javax.swing.JFrame {
 
                 }
                 result.close();
-            } catch (Exception e) {
+            } catch (HeadlessException | SQLException e) {
             }
         }
 
@@ -495,6 +527,16 @@ public class Stock extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int row = jTable1.getSelectedRow();
 
+        if (evt.getClickCount() == 2) {
+            if (grn != null) {
+                grn.getjTextField3().setText(String.valueOf(jTable1.getValueAt(row, 0)));
+       
+                grn.getjLabel7().setText(String.valueOf(jTable1.getValueAt(row, 2)));
+                grn.getjLabel9().setText(String.valueOf(jTable1.getValueAt(row, 3)));
+                this.dispose();
+            }
+        }
+
         jTextField1.setText((String) jTable1.getValueAt(row, 0));
         jTextField1.setEditable(false);
 
@@ -503,12 +545,24 @@ public class Stock extends javax.swing.JFrame {
 
         jButton2.setEnabled(false);
 
-        loadStock((String) jTable1.getValueAt(row, 0));
+        loadStock();
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-        loadStock("");
+        loadStock();
     }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        loadStock();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        resetSecond();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        loadStock();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -599,48 +653,102 @@ public class Stock extends javax.swing.JFrame {
         }
     }
 
-    private void loadStock(String pid) {
+    private void loadStock() {
         DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
         dtm.setRowCount(0);
-        
+
+        String pid;
+
+        int row = jTable1.getSelectedRow();
 
         try {
             String query = "SELECT * FROM `stock` "
                     + "INNER JOIN `product` ON `stock`.`product_id` = `product`.`id` "
                     + "INNER JOIN `brand` ON `brand`.`id`= `product`.`brand_id` ";
 
-            if (!pid.isEmpty()) {
-                query += "WHERE `stock`.`product_id`='" + pid + "'";
+            if (row >= 0) {
+                pid = (String) jTable1.getValueAt(row, 0);
+                query += " WHERE `stock`.`product_id`='" + pid + "'";
+            }
+
+            double minPrice = 0;
+            double maxPrice = 0;
+
+            if (!jFormattedTextField1.getText().isEmpty()) {
+                minPrice = Double.parseDouble(jFormattedTextField1.getText());
+            }
+
+            if (!jFormattedTextField2.getText().isEmpty()) {
+                maxPrice = Double.parseDouble(jFormattedTextField2.getText());
+            }
+
+            if (minPrice > 0 && maxPrice == 0) {
+                query += " AND stock.price > '" + minPrice + "'";
+            } else if (minPrice == 0 && maxPrice > 0) {
+                query += " AND stock.price < '" + maxPrice + "'";
+            } else if (minPrice > 0 && maxPrice > 0) {
+                query += " AND stock.price > '" + minPrice + "' AND stock.price < '" + maxPrice + "'";
+            }
+
+//            Exp
+            Date start = null;
+            Date end = null;
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+            if (jDateChooser1.getDate() != null) {
+                start = jDateChooser1.getDate();
+                query += (query.contains("WHERE") ? " AND " : " WHERE ") + "`stock`.`exp` > '" + format.format(start) + "'";
+            }
+
+            if (jDateChooser2.getDate() != null) {
+                end = jDateChooser2.getDate();
+                query += (query.contains("WHERE") ? " AND " : " WHERE ") + "`stock`.`exp` < '" + format.format(end) + "'";
             }
 
             String sort = (String) jComboBox1.getSelectedItem();
 
-            query += "ORDER BY";
+            query += " ORDER BY ";
 
-            if (sort.equals("Stock ID ASC")) {
-                query += "`stock`.`id` ASC";
-            } else if (sort.equals("Stock ID DESC")) {
-                query += "`stock`.`id` DESC";
-            } else if (sort.equals("Product ID ASC")) {
-                query += "`product`.`id` ASC";
-            } else if (sort.equals("Product ID DESC")) {
-                query += "`product`.`id` DESC";
-            } else if (sort.equals("Brand ASC")) {
-                query += "`brand`.`id` ASC";
-            } else if (sort.equals("Brand DESC")) {
-                query += "`brand`.`id` DESC";
-            } else if (sort.equals("Name ASC")) {
-                query += "`product`.`name` ASC";
-            } else if (sort.equals("Name DESC")) {
-                query += "`product`.`name` DESC";
-            } else if (sort.equals("Selling Price ASC")) {
-                query += "`stock`.`price` ASC";
-            } else if (sort.equals("Selling Price DESC")) {
-                query += "`stock`.`qty` DESC";
-            } else if (sort.equals("Quantity ASC")) {
-                query += "`stock`.`price` ASC";
-            } else if (sort.equals("Quantity DESC")) {
-                query += "`stock`.`qty` DESC";
+            query = query.replace("WHERE ORDER BY", "ORDER BY");
+            query = query.replace("AND ORDER BY", "ORDER BY");
+
+            switch (sort) {
+                case "Stock ID ASC":
+                    query += "`stock`.`id` ASC";
+                    break;
+                case "Stock ID DESC":
+                    query += "`stock`.`id` DESC";
+                    break;
+                case "Product ID ASC":
+                    query += "`product`.`id` ASC";
+                    break;
+                case "Product ID DESC":
+                    query += "`product`.`id` DESC";
+                    break;
+                case "Brand ASC":
+                    query += "`brand`.`id` ASC";
+                    break;
+                case "Brand DESC":
+                    query += "`brand`.`id` DESC";
+                    break;
+                case "Name ASC":
+                    query += "`product`.`name` ASC";
+                    break;
+                case "Name DESC":
+                    query += "`product`.`name` DESC";
+                    break;
+                case "Selling Price ASC":
+                    query += "`stock`.`price` ASC";
+                    break;
+                case "Selling Price DESC":
+                    query += "`stock`.`price` DESC";
+                    break;
+                case "Quantity ASC":
+                    query += "`stock`.`qty` ASC";
+                    break;
+                case "Quantity DESC":
+                    query += "`stock`.`qty` DESC";
+                    break;
             }
 
             ResultSet rs = MySQL2.executeSearch(query);
@@ -675,10 +783,14 @@ public class Stock extends javax.swing.JFrame {
         jButton2.setEnabled(true);
         loadBrands();
         loadProducts();
-        loadStock("");
+        loadStock();
     }
 
     private void resetSecond() {
-        loadStock("");
+        jComboBox1.setSelectedIndex(0);
+
+        jFormattedTextField1.setValue(0);
+        jFormattedTextField2.setValue(0);
+        loadStock();
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="resizable" type="boolean" value="false"/>
@@ -104,11 +104,13 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel3" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                              <Component id="jTextField3" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel4" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jComboBox2" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel3" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Component id="jTextField3" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Component id="jComboBox2" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                       </Group>
@@ -415,6 +417,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Find"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="jComboBox1">
               <Properties>
@@ -443,8 +448,26 @@
               </AuxValues>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField1">
+              <Properties>
+                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                  <Format format="#0.00" subtype="-1" type="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="0"/>
+                <Property name="selectedTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField2">
+              <Properties>
+                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                  <Format format="#0.00" subtype="-1" type="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="0"/>
+                <Property name="selectedTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButton6">
               <Properties>
@@ -453,6 +476,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Find"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
               <Properties>
@@ -481,6 +507,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Clear All"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
