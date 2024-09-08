@@ -19,12 +19,18 @@ import model.MySQL2;
  *
  * @author AmiChan
  */
-public class CustomerRegistrationForm extends javax.swing.JFrame {
+public class CustomerRegistration extends javax.swing.JFrame {
+
+    private Invoice invoice;
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
 
     /**
      * Creates new form CustomerRegistrationForm
      */
-    public CustomerRegistrationForm() {
+    public CustomerRegistration() {
         initComponents();
         loadCustomers("first_name", "ASC", jTextField1.getText());
     }
@@ -208,7 +214,6 @@ public class CustomerRegistrationForm extends javax.swing.JFrame {
         jLabel6.setText("Customer Sort By :");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Name ASC", "Name DESC", "Points ASC", "Points DESC" }));
-        jComboBox1.setSelectedIndex(0);
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox1ItemStateChanged(evt);
@@ -323,6 +328,7 @@ public class CustomerRegistrationForm extends javax.swing.JFrame {
         String fname = String.valueOf(jTable1.getValueAt(row, 1));
         String lname = String.valueOf(jTable1.getValueAt(row, 2));
         String email = String.valueOf(jTable1.getValueAt(row, 3));
+        String points = String.valueOf(jTable1.getValueAt(row, 4));
 
         jTextField1.setText(mobile);
         jTextField1.setEnabled(false);
@@ -338,7 +344,16 @@ public class CustomerRegistrationForm extends javax.swing.JFrame {
                 jLabel8.setText(resultSet.getString(1));
 
             }
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (evt.getClickCount() == 2) {
+            invoice.getjTextField4().setText(mobile);
+            invoice.getjLabel6().setText(fname);
+            invoice.getjTextField6().setText(points);
+            this.dispose();
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -373,7 +388,7 @@ public class CustomerRegistrationForm extends javax.swing.JFrame {
                     canUpdate = true;
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(CustomerRegistrationForm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CustomerRegistration.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             if (canUpdate) {
@@ -405,7 +420,7 @@ public class CustomerRegistrationForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CustomerRegistrationForm().setVisible(true);
+                new CustomerRegistration().setVisible(true);
             }
         });
     }

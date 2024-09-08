@@ -24,7 +24,12 @@ import model.MySQL2;
  */
 public class Stock extends javax.swing.JFrame {
 
+    private Invoice invoice;
     private GRN grn;
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
 
     public void setGRN(GRN grn) {
         this.grn = grn;
@@ -379,6 +384,11 @@ public class Stock extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -530,7 +540,7 @@ public class Stock extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             if (grn != null) {
                 grn.getjTextField3().setText(String.valueOf(jTable1.getValueAt(row, 0)));
-       
+
                 grn.getjLabel7().setText(String.valueOf(jTable1.getValueAt(row, 2)));
                 grn.getjLabel9().setText(String.valueOf(jTable1.getValueAt(row, 3)));
                 this.dispose();
@@ -563,6 +573,34 @@ public class Stock extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         loadStock();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        int row = jTable2.getSelectedRow();
+
+        String sid = (String) jTable2.getValueAt(row, 0);
+        String brand = (String) jTable2.getValueAt(row, 2);
+        String name = (String) jTable2.getValueAt(row, 3);
+        String selling_price = (String) jTable2.getValueAt(row, 4);
+        String qty = (String) jTable2.getValueAt(row, 5);
+        String mfd = (String) jTable2.getValueAt(row, 6);
+        String exd = (String) jTable2.getValueAt(row, 7);
+
+        if (invoice != null) {
+            if (evt.getClickCount() == 2) {
+                invoice.getjTextField1().setText(sid);
+                invoice.getjLabel10().setText(brand);
+                invoice.getjLabel12().setText(name);
+                invoice.getjFormattedTextField4().setText(selling_price);
+                invoice.getjLabel14().setText(mfd);
+                invoice.getjLabel16().setText(exd);
+                invoice.getjTextField2().setText(qty);
+
+                this.dispose();
+            }
+        }
+
+
+    }//GEN-LAST:event_jTable2MouseClicked
 
     /**
      * @param args the command line arguments

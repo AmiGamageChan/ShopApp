@@ -24,8 +24,8 @@ public class SignIn extends javax.swing.JFrame {
         return employeeEmail;
     }
 
-    public static void setEmployeeEmail(String aEmployeeEmail) {
-        employeeEmail = aEmployeeEmail;
+    public static void setEmployeeEmail(String EmployeeEmail) {
+        employeeEmail = EmployeeEmail;
     }
 
     /**
